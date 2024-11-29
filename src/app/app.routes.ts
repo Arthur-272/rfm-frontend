@@ -29,8 +29,9 @@ export const routes: Routes = [
   { path: 'property/create', component: CreatePropertyComponent, canActivate: [AuthGuard] },
   { path: 'property/update', component: CreateVehicleComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: '**', redirectTo: '/home' }
+  { path: '**', redirectTo: '/home' }, // Catch-all should remain at the end
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
