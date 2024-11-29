@@ -5,11 +5,12 @@ import {ApplicationConstants} from '../config/constants'
     providedIn: 'root'
 })
 export class ApplicationConfigService {
-    
+
     resourceURL: string;
 
+
     constructor(private constants : ApplicationConstants) {
-        this.resourceURL = `http://localhost:${constants.getBackendPort()}/api/${constants.getVersion()}`;
+        this.resourceURL = `${constants.getHost()}:${constants.getBackendPort()}/api/${constants.getVersion()}`;
     }
 
     getResourceURL() :string {

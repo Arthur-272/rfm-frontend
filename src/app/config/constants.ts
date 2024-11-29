@@ -5,6 +5,7 @@ import exp from "constants";
 export class ApplicationConstants {
     private readonly BACKEND_PORT = 8080;
     private readonly VERSION = `v1`;
+    private readonly HOST= 'https://rfm-backend-1.onrender.com'
 
     getBackendPort(): number {
         return this.BACKEND_PORT;
@@ -12,5 +13,9 @@ export class ApplicationConstants {
 
     getVersion() : string {
         return this.VERSION;
+    }
+
+    getHost(): string {
+      return this.HOST;
     }
 }
