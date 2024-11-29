@@ -17,7 +17,6 @@ import {AuthGuard} from './components/auth/auth.guard';
 
 
 export const routes: Routes = [
-  { path: '**', redirectTo: '/home' },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegisterUserComponent },
@@ -30,7 +29,7 @@ export const routes: Routes = [
   { path: 'property/create', component: CreatePropertyComponent, canActivate: [AuthGuard] },
   { path: 'property/update', component: CreateVehicleComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  {path: '*', redirectTo: '/home'},
+  { path: '**', redirectTo: '/home' }
 ];
 
 @NgModule({
