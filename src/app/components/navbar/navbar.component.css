@@ -1,0 +1,152 @@
+/* Define CSS variables for easy theming */
+:root {
+  --navbar-bg-color: #1e1e2f;
+  --navbar-text-color: #ffffff;
+  --navbar-hover-color: #ff6f61;
+  --navbar-accent-color: #4db6ac;
+}
+
+/* General styles */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Prevent body scrolling when menu is open */
+body.menu-open {
+  overflow: hidden;
+}
+
+/* Navbar container */
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: black;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+/* Remove transparency on scroll */
+.navbar.scrolled {
+  background-color: black;
+}
+
+/* Brand styling */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.brand-logo {
+  text-decoration: none;
+  color: orangered;
+  font-size: 1.8em;
+  font-weight: 600;
+}
+
+/* Hamburger menu button */
+.hamburger {
+  font-size: 1.8em;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none;
+  margin-left: auto;
+  outline: none;
+  position: relative;
+  z-index: 1100; /* Ensure it's above the menu */
+}
+
+.hamburger i {
+  transition: transform 0.3s ease;
+}
+
+.hamburger i.fa-times {
+  transform: rotate(180deg);
+}
+
+/* Navbar menu styles */
+.navbar-menu {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-menu li {
+  margin: 0 15px;
+}
+
+.navbar-menu button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.navbar-menu button:hover {
+  color: var(--navbar-hover-color);
+  transform: scale(1.05);
+}
+
+.navbar-menu button.active {
+  color: var(--navbar-accent-color);
+  border-bottom: 2px solid var(--navbar-accent-color);
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .navbar-menu {
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; /* Cover the entire viewport */
+    height: 100%; /* Cover the entire viewport */
+    background-color: black; /* Solid background */
+    padding-top: 60px;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%); /* Hide off-screen to the left */
+    z-index: 1000;
+    overflow-y: auto;
+  }
+
+  .navbar-menu.show {
+    transform: translateX(0); /* Slide in from the left */
+  }
+
+  .navbar-menu li {
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .navbar-menu button {
+    font-size: 1.5em;
+    width: 100%;
+    padding: 15px;
+  }
+}
+
+/* Accessibility focus styles */
+.hamburger:focus,
+.navbar-menu button:focus {
+  outline: 2px solid var(--navbar-accent-color);
+  outline-offset: 4px;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}

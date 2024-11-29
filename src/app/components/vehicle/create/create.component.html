@@ -1,0 +1,30 @@
+
+<div class="vehicle-form-container">
+  <form class="vehicle-form" (ngSubmit)="onSubmit()" #vehicleForm="ngForm">
+    <h2>Add Vehicle</h2>
+    <div>
+      <label for="numberPlate">Number Plate</label>
+      <input
+        type="text"
+        id="numberPlate"
+        name="numberPlate"
+        [(ngModel)]="vehicle.numberPlate"
+        required
+      />
+    </div>
+    <div>
+      <label for="model">Model</label>
+      <input
+        type="text"
+        id="model"
+        name="model"
+        [(ngModel)]="vehicle.model"
+        required
+      />
+    </div>
+    <div class="form-buttons">
+      <button type="submit">Submit</button>
+      <button type="button" (click)="onCancel(vehicleForm)">Cancel</button>
+    </div>
+  </form>
+</div>

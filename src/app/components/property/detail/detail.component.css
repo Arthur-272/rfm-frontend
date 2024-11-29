@@ -1,0 +1,82 @@
+.property-detail {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.property-detail h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.address-section,
+.vehicles-section {
+  margin-top: 20px;
+}
+
+.address-section h2,
+.vehicles-section h2 {
+  font-size: 1.5rem;
+  color: #444;
+  border-bottom: 2px solid #007BFF;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.address-section p,
+.vehicles-section p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+  margin: 5px 0;
+}
+
+.vehicles-section ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.vehicles-section li {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.vehicles-section li p {
+  margin: 0;
+}
+
+strong {
+  color: #333;
+}
+
+.add-button-floating {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-button-floating:hover {
+  background-color: #0056b3;
+}

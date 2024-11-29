@@ -1,0 +1,55 @@
+<div class="company-report-container">
+  <h2>Company Report</h2>
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <table class="report-table" *ngIf="reportEntries.length > 0">
+    <thead>
+    <tr>
+      <th>Caught By</th>
+      <th>Released By</th>
+      <th>Details</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let entry of reportEntries">
+      <td>
+        <div class="user-info">
+          <p><strong>User:</strong> {{ entry.catchInfo.user.username }}</p>
+          <p>
+            <strong>Time:</strong> {{ entry.catchInfo.timestamp | date: 'short' }}
+          </p>
+        </div>
+      </td>
+      <td>
+        <div class="user-info">
+          <p><strong>User:</strong> {{ entry.releaseInfo.user.username }}</p>
+          <p>
+            <strong>Time:</strong> {{ entry.releaseInfo.timestamp | date: 'short' }}
+          </p>
+        </div>
+      </td>
+      <td>
+        <div class="details">
+          <p>
+            <strong>Vehicle:</strong> {{ entry.catchInfo.vehicle.numberPlate }} -
+            {{ entry.catchInfo.vehicle.model }} ({{ entry.catchInfo.vehicle.color }})
+          </p>
+          <p>
+            <strong>Property:</strong> {{ entry.catchInfo.property.name }}
+          </p>
+          <p>
+            <strong>Address:</strong> {{ entry.catchInfo.property.address.fullAddress }}
+          </p>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- No Entries Message -->
+  <div *ngIf="reportEntries.length === 0 && !errorMessage">
+    <p>No entries available.</p>
+  </div>
+</div>

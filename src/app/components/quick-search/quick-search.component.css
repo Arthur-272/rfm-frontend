@@ -1,0 +1,126 @@
+/* Root variables for colors and fonts */
+:root {
+  --primary-color: #4db6ac; /* Teal */
+  --error-color: #e74c3c; /* Red */
+  --font-family: 'Poppins', sans-serif;
+}
+
+/* Global styles */
+.search-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--primary-color);
+}
+
+/* Form Styles */
+.search-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.form-group input[type='text'] {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 1em;
+  transition: border-color 0.3s ease;
+  /* Ensure input is always visible */
+  opacity: 1;
+}
+
+/* Remove any hover styles that hide the input */
+.form-group input[type='text']:hover {
+  opacity: 1;
+}
+
+.form-group input[type='text']:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+/* Search Button */
+.search-button {
+  padding: 12px 20px;
+  background-color: black;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+
+/* Vehicle Details */
+.vehicle-details {
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #e8f5e9; /* Light green background */
+  border-left: 4px solid var(--primary-color);
+  border-radius: 4px;
+}
+
+.vehicle-details h3 {
+  margin-top: 0;
+  color: var(--primary-color);
+}
+
+.vehicle-details p {
+  margin: 10px 0;
+  font-size: 1em;
+}
+
+.vehicle-details ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.vehicle-details li {
+  margin-bottom: 5px;
+}
+
+/* Error Message */
+.error-message {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #fceae9; /* Light red background */
+  color: var(--error-color);
+  border-left: 4px solid var(--error-color);
+  border-radius: 4px;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 480px) {
+  .search-container {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .form-group input[type='text'] {
+    font-size: 0.9em;
+  }
+
+  .search-button {
+    font-size: 0.9em;
+    padding: 10px 15px;
+  }
+}

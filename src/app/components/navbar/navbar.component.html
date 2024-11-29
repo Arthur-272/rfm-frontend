@@ -1,0 +1,20 @@
+<nav class="navbar" [ngClass]="{'scrolled': isScrolled}">
+  <div class="navbar-brand">
+    <a routerLink="/" class="brand-logo">RFM</a>
+    <button class="hamburger" (click)="toggleMenu()">
+      <i [ngClass]="menuOpen ? 'fas fa-times' : 'fas fa-bars'"></i>
+    </button>
+  </div>
+  <ul class="navbar-menu" [ngClass]="{'show': menuOpen}">
+    <ng-container *ngIf="isAuthenticated; else guestTemplate">
+      <li *ngFor="let option of options">
+        <button type="button" (click)="onClick(option.name)">{{ option.name }}</button>
+      </li>
+    </ng-container>
+    <ng-template #guestTemplate>
+      <li *ngFor="let option of guestOptions">
+        <button type="button" (click)="onClick(option.name)">{{ option.name }}</button>
+      </li>
+    </ng-template>
+  </ul>
+</nav>

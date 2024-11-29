@@ -1,0 +1,63 @@
+.property-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+}
+
+.property-table th, .property-table td {
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.property-table th {
+  background-color: #f4f4f4;
+}
+
+.property-table td {
+  cursor: pointer;
+}
+
+.property-table td:hover {
+  background-color: #f1f1f1;
+}
+
+.address {
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.address:hover {
+  text-decoration: none;
+  background-color: #f0f8ff;
+}
+
+.table-container {
+  position: relative;
+}
+
+.add-button-floating {
+  position: fixed; /* Change to fixed for page-relative positioning */
+  bottom: 20px; /* Distance from the bottom of the viewport */
+  right: 20px; /* Distance from the right of the viewport */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for better visibility */
+  z-index: 1000; /* Ensure it appears on top of other elements */
+}
+
+.add-button-floating:hover {
+  background-color: #0056b3;
+}
+

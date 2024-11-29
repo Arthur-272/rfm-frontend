@@ -1,0 +1,79 @@
+<div class="register-container">
+  <h2>Create an Account</h2>
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input
+        id="firstName"
+        formControlName="firstName"
+        type="text"
+        placeholder="Enter your first name"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input
+        id="lastName"
+        formControlName="lastName"
+        type="text"
+        placeholder="Enter your last name"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        id="email"
+        formControlName="email"
+        type="email"
+        placeholder="Enter your email"
+      />
+      <div
+        class="error-message"
+        *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+      >
+        Please enter a valid email address.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="username">Username <span class="required">*</span></label>
+      <input
+        id="username"
+        formControlName="username"
+        type="text"
+        placeholder="Choose a username"
+        required
+      />
+      <div
+        class="error-message"
+        *ngIf="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
+      >
+        Username is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password <span class="required">*</span></label>
+      <input
+        id="password"
+        formControlName="password"
+        type="password"
+        placeholder="Create a strong password"
+        (input)="onPasswordInput()"
+        required
+      />
+      <div class="password-strength">{{ passwordStrength }}</div>
+      <div
+        class="error-message"
+        *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+      >
+        Password must be at least 8 characters long and include uppercase, lowercase, number, and
+        special character.
+      </div>
+    </div>
+
+    <button type="submit">Register</button>
+  </form>
+</div>

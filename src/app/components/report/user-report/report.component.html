@@ -1,0 +1,111 @@
+<div class="report-container">
+  <h2>My Daily Report</h2>
+  <div *ngIf="errorMessage">
+    <p class="error-message">{{ errorMessage }}</p>
+  </div>
+
+  <!-- Full Entries -->
+  <div *ngIf="fullEntries.length > 0">
+    <h3>Full Entries</h3>
+    <table class="report-table">
+      <thead>
+      <tr>
+        <th>Vehicle Info</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let entry of fullEntries">
+        <td>
+          <div class="entry-card">
+            <div class="entry-header">
+              <h4>{{ entry.vehicle.numberPlate }}</h4>
+              <p>{{ entry.vehicle.model }} - {{ entry.vehicle.color }}</p>
+            </div>
+            <div class="entry-content">
+              <p>
+                <strong>Caught At:</strong>
+                {{ entry.catchInfo?.timestamp | date: 'short' }}
+              </p>
+              <p>
+                <strong>Released At:</strong>
+                {{ entry.releaseInfo?.timestamp | date: 'short' }}
+              </p>
+              <p>
+                <strong>Property:</strong>
+                {{ entry.property.address.fullAddress }}
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Half Entries -->
+  <div *ngIf="halfEntries.length > 0">
+    <h3>Half Entries</h3>
+    <table class="report-table">
+      <thead>
+      <tr>
+        <th>Catch</th>
+        <th>Release</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let entry of halfEntries">
+        <td>
+          <!-- Catch Info or Empty -->
+          <ng-container *ngIf="entry.catchInfo; else emptyCell">
+            <div class="entry-card">
+              <div class="entry-header">
+                <h4>{{ entry.vehicle.numberPlate }}</h4>
+                <p>{{ entry.vehicle.model }} - {{ entry.vehicle.color }}</p>
+              </div>
+              <div class="entry-content">
+                <p>
+                  <strong>Caught At:</strong>
+                  {{ entry.catchInfo.timestamp | date: 'short' }}
+                </p>
+                <p>
+                  <strong>Property:</strong>
+                  {{ entry.property.address.fullAddress }}
+                </p>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #emptyCell>
+            <!-- Empty Cell -->
+          </ng-template>
+        </td>
+        <td>
+          <!-- Release Info or Empty -->
+          <ng-container *ngIf="entry.releaseInfo; else emptyCell">
+            <div class="entry-card">
+              <div class="entry-header">
+                <h4>{{ entry.vehicle.numberPlate }}</h4>
+                <p>{{ entry.vehicle.model }} - {{ entry.vehicle.color }}</p>
+              </div>
+              <div class="entry-content">
+                <p>
+                  <strong>Released At:</strong>
+                  {{ entry.releaseInfo.timestamp | date: 'short' }}
+                </p>
+                <p>
+                  <strong>Property:</strong>
+                  {{ entry.property.address.fullAddress }}
+                </p>
+              </div>
+            </div>
+          </ng-container>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- No Entries Message -->
+  <div *ngIf="fullEntries.length === 0 && halfEntries.length === 0">
+    <p>You have no entries for today.</p>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+.company-report-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.company-report-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.error-message {
+  color: #b00020;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.report-table th,
+.report-table td {
+  border: 1px solid #ddd;
+  padding: 15px;
+  vertical-align: top;
+}
+
+.report-table th {
+  background-color: #f5f5f5;
+  color: #555;
+  text-align: left;
+}
+
+.report-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.user-info p,
+.details p {
+  margin: 5px 0;
+  color: #555;
+}
+
+strong {
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .report-table th,
+  .report-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .report-table tr {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .report-table thead {
+    display: none;
+  }
+
+  .report-table td {
+    border: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .report-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+  }
+}

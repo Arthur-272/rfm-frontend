@@ -1,0 +1,35 @@
+<div class="search-container">
+  <h2>Search Vehicle</h2>
+  <form (ngSubmit)="onSearch()">
+    <div class="form-group">
+      <label for="numberPlate">Enter Vehicle Number Plate:</label>
+      <input
+        type="text"
+        id="numberPlate"
+        [(ngModel)]="numberPlate"
+        name="numberPlate"
+        required
+        placeholder="e.g., ABC123"
+      />
+    </div>
+    <button type="submit" class="search-button">Search</button>
+  </form>
+
+  <div class="vehicle-details" *ngIf="vehicle">
+    <h3>Vehicle Details</h3>
+    <p><strong>Number Plate:</strong> {{ vehicle.numberPlate }}</p>
+    <p><strong>Model:</strong> {{ vehicle.model }}</p>
+    <p><strong>Color:</strong> {{ vehicle.color }}</p>
+
+    <h4>Authorized Properties:</h4>
+    <ul>
+      <li *ngFor="let property of properties">
+        {{ property.address.fullAddress }}
+      </li>
+    </ul>
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">
+    <p>{{ errorMessage }}</p>
+  </div>
+</div>

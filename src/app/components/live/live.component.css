@@ -1,0 +1,108 @@
+/* Container for the flip card */
+.flip-card {
+  background-color: transparent;
+  width: 100%;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  cursor: pointer;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.flip-card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  /* Front side styles */
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.flip-card-back {
+  /* Back side styles */
+  background-color: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform: rotateY(180deg);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.flip-card .card-header {
+  padding: 20px;
+  background-color: #f5f5f5;
+  align-self: center;
+}
+
+.flip-card .card-title {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.flip-card .card-subtitle {
+  margin: 5px 0 0;
+  color: #777;
+}
+
+.flip-card .card-content {
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.flip-card .card-content p {
+  margin: 10px 0;
+}
+
+.flip-card .card-actions {
+  padding: 15px 20px;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.flip-card .card-actions button {
+  background-color: #4db6ac;
+  color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.flip-card .card-actions button:hover {
+  background-color: #43a597;
+}
+
+.flip-card .card-actions button:nth-child(2) {
+  background-color: #e57373;
+}
+
+.flip-card .card-actions button:nth-child(2):hover {
+  background-color: #d32f2f;
+}
+
+/* Grid container styling */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-gap: 20px;
+}

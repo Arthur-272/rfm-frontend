@@ -1,0 +1,57 @@
+<div class="live-container">
+  <h2>Caught Vehicles</h2>
+  <div *ngIf="errorMessage">
+    <p>{{ errorMessage }}</p>
+  </div>
+  <div class="grid-container">
+    <div
+      *ngFor="let catchInfo of caughtVehicles; let i = index"
+      class="flip-card"
+      (click)="flipCard(i)"
+    >
+      <div class="flip-card-inner" [class.flipped]="isFlipped[i]">
+        <!-- Front Side -->
+        <div class="flip-card-front">
+          <div class="card-header">
+            <h3 class="card-title">{{ catchInfo.vehicle.numberPlate }}</h3>
+            <p class="card-subtitle">
+              {{ catchInfo.vehicle.model }} - {{ catchInfo.vehicle.color }}
+            </p>
+          </div>
+          <div class="card-content">
+            <p>
+              <strong>Property:</strong>
+              {{ catchInfo.property.address.fullAddress }}
+            </p>
+            <p>
+              <strong>Time:</strong>
+              {{ catchInfo.timestamp | date: 'medium' }}
+            </p>
+          </div>
+        </div>
+        <!-- Back Side -->
+        <div class="flip-card-back">
+          <div class="card-content">
+            <!-- Detailed Information -->
+            <p><strong>Booted By:</strong> {{ catchInfo.user.username.charAt(0).toUpperCase() + catchInfo.user.username.slice(1)}}</p>
+            <!-- Add more details as needed -->
+          </div>
+          <div class="card-actions">
+            <button
+              type="button"
+              (click)="releaseCatch(catchInfo); $event.stopPropagation()"
+            >
+              Release
+            </button>
+            <button
+              type="button"
+              (click)="removeCatch(catchInfo); $event.stopPropagation()"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
