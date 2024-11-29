@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {NgForOf, NgIf} from '@angular/common';
 import {IProperty, IVehicle} from '../../../interface';
 import {FormsModule} from '@angular/forms';
+import {PropertyService} from '../property.service';
 
 @Component({
   selector: 'app-detail',
@@ -12,7 +13,7 @@ import {FormsModule} from '@angular/forms';
     FormsModule
   ],
   templateUrl: './detail.component.html',
-  styleUrl: './detail.component.css'
+  styleUrls: ['./detail.component.css']
 })
 export class DetailPropertyComponent implements OnInit{
   property: IProperty | null = null;
@@ -20,11 +21,10 @@ export class DetailPropertyComponent implements OnInit{
   searchQuery: string = '';
   vehicle: IVehicle | null = null;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(private route: ActivatedRoute, private router: Router, private propertyService: PropertyService) {}
 
   ngOnInit() {
-    this.property = history.state.property;
-    this.filteredVehicles = this.property?.authorizedVehicles || [];
+    this.refreshProperty();
   }
 
   filterVehicle() {
@@ -40,9 +40,19 @@ export class DetailPropertyComponent implements OnInit{
 
   }
 
+  refreshProperty() {
+    this.propertyService.getPropertyById(history.state.property?.id || '').subscribe({
+      next: (response) => {
+        this.property = response;
+        this.filteredVehicles = this.property?.authorizedVehicles || [];
+      },
+      error: (error) => {
+        window.alert("Error Getting Property");
+      }
+    })
+  }
 
   addVehicleToProperty() {
-
     this.router.navigate(['/property/update'], {state: {property: this.property}});
   }
 

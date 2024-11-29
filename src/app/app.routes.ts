@@ -13,20 +13,23 @@ import {LiveComponent} from './components/live/live.component';
 import {ReportComponent} from './components/report/user-report/report.component';
 import {RegisterUserComponent} from './components/register-user/register-user.component';
 import {CompanyReportComponent} from './components/report/company-report/company-report.component';
+import {AuthGuard} from './components/auth/auth.guard';
 
 
 export const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'register', component: RegisterUserComponent},
-  {path: 'company/report', component: CompanyReportComponent},
-  {path: 'catch/live', component: LiveComponent},
-  {path: 'catch', component: CatchComponent},
-  {path: 'user/report', component: ReportComponent},
-  {path: 'properties', component: ListPropertiesComponent},
-  {path: 'property/detail', component: DetailPropertyComponent},
-  {path: 'property/create', component: CreatePropertyComponent},
-  {path: 'property/update', component: CreateVehicleComponent},
-  {path: 'login', component: LoginComponent},
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'register', component: RegisterUserComponent },
+  { path: 'company/report', component: CompanyReportComponent, canActivate: [AuthGuard] },
+  { path: 'catch/live', component: LiveComponent, canActivate: [AuthGuard] },
+  { path: 'catch', component: CatchComponent, canActivate: [AuthGuard] },
+  { path: 'user/report', component: ReportComponent, canActivate: [AuthGuard] },
+  { path: 'properties', component: ListPropertiesComponent, canActivate: [AuthGuard] },
+  { path: 'property/detail', component: DetailPropertyComponent, canActivate: [AuthGuard] },
+  { path: 'property/create', component: CreatePropertyComponent, canActivate: [AuthGuard] },
+  { path: 'property/update', component: CreateVehicleComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  {path: '*', redirectTo: '/home'},
 ];
 
 @NgModule({

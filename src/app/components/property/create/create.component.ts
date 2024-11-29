@@ -3,6 +3,7 @@ import {IProperty} from '../../../interface';
 import {PropertyService} from '../property.service';
 import {FormsModule} from '@angular/forms';
 import {response} from 'express';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-create',
@@ -29,7 +30,7 @@ export class CreatePropertyComponent {
     authorizedVehicles: []
   }
 
-  constructor(private service: PropertyService) {}
+  constructor(private service: PropertyService, private router: Router) {}
 
   onSubmit() {
     console.log(this.property);
@@ -37,11 +38,15 @@ export class CreatePropertyComponent {
     this.service.createProperty(this.property).subscribe({
       next: (response) => {
         window.alert("Property Created Successfully");
-
+        this.router.navigate(['/properties']);
       },
       error: (error) => {
         window.alert("Error Creating Property");
       }
     });
+  }
+
+  onCancel() {
+    this.router.navigate(['/properties']);
   }
 }

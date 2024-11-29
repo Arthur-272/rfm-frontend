@@ -1,13 +1,17 @@
 <div class="property-detail" *ngIf="property">
-  <h1 class="property-name">{{ property.name }}</h1>
+  <div class="header">
+    <h1 class="property-name">{{ property.name }}</h1>
+    <button class="add-button" (click)="addVehicleToProperty()">Add Vehicle</button>
+  </div>
 
   <div class="address-section">
     <h2>Address</h2>
     <p>
       <strong>{{ property.address.streetAddress }}</strong>
-      (<span>{{ property.address.fullAddress }}</span>)
+      <span>({{ property.address.fullAddress }})</span>
     </p>
   </div>
+
   <div class="search-section">
     <input
       type="text"
@@ -19,12 +23,12 @@
 
   <div class="vehicles-section">
     <h2>Authorized Vehicles</h2>
-    <ul>
-      <li *ngFor="let vehicle of filteredVehicles">
+    <div class="vehicle-cards">
+      <div class="vehicle-card" *ngFor="let vehicle of filteredVehicles">
         <p><strong>Number Plate:</strong> {{ vehicle.numberPlate }}</p>
         <p><strong>Model:</strong> {{ vehicle.model }}</p>
-      </li>
-    </ul>
+        <p><strong>Color:</strong> {{ vehicle.color }}</p>
+      </div>
+    </div>
   </div>
-  <button class="add-button-floating" (click)="addVehicleToProperty()">+</button>
 </div>

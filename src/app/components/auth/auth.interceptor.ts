@@ -11,6 +11,10 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private router: Router, private authService: AuthService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const excludedUrls = ['login'];
+    if (excludedUrls.some(url => request.url.includes(url))) {
+      return next.handle(request);
+    }
     const token = this.authService.getToken();
     if (token) {
       request = request.clone({
@@ -24,12 +28,13 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
+        console.log("Interceptor Error:", error); // Debugging: Log full error object
         if (error.status === 401 || error.status === 403) {
-          console.log(error);
+          console.log("Unauthorized or Forbidden Error"); // Should print if condition matches
           this.authService.removeToken();
           this.router.navigate(['/login']);
         }
-        return throwError(error);
+        return throwError(error); // Ensure the error is rethrown for further handling
       })
     );
   }

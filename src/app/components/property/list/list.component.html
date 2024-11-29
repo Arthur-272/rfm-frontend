@@ -1,4 +1,8 @@
-<div class="table-container">
+<div class="property-list-container">
+  <div class="header">
+    <h2>Properties</h2>
+    <button class="add-button" (click)="addProperty()">Add Property</button>
+  </div>
   <table class="property-table">
     <thead>
     <tr>
@@ -8,7 +12,10 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let property of properties; let i = index" (click)="goToDetail(property)">
+    <tr
+      *ngFor="let property of properties; let i = index"
+      (click)="goToDetail(property)"
+    >
       <td>{{ i + 1 }}</td>
       <td>{{ property.name }}</td>
       <td>
@@ -19,5 +26,4 @@
     </tr>
     </tbody>
   </table>
-  <button class="add-button-floating" (click)="addProperty()">+</button>
 </div>

@@ -19,7 +19,8 @@ export class CreateVehicleComponent{
   constructor(private service: PropertyService, private router: Router){
     this.vehicle = {
       numberPlate: '',
-      model: ''
+      model: '',
+      color: ''
     }
   }
 

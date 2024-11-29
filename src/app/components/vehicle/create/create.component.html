@@ -22,6 +22,16 @@
         required
       />
     </div>
+      <div>
+        <label for="color">Color</label>
+        <input
+          type="text"
+          id="color"
+          name="color"
+          [(ngModel)]="vehicle.color"
+          required
+        />
+    </div>
     <div class="form-buttons">
       <button type="submit">Submit</button>
       <button type="button" (click)="onCancel(vehicleForm)">Cancel</button>
