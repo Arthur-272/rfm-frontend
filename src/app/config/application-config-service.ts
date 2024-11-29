@@ -10,7 +10,7 @@ export class ApplicationConfigService {
 
 
     constructor(private constants : ApplicationConstants) {
-        this.resourceURL = `${constants.getHost()}:${constants.getBackendPort()}/api/${constants.getVersion()}`;
+        this.resourceURL = `${constants.getHost()}/api/${constants.getVersion()}`;
     }
 
     getResourceURL() :string {
