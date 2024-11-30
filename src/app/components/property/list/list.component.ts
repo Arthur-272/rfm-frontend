@@ -37,9 +37,14 @@ export class ListPropertiesComponent implements OnInit{
     event.stopPropagation();
 
     if (confirm(`Are you sure you want to delete the property "${property.name}"?`)) {
-      this.service.deleteProperty(property.id).subscribe(() => {
-        // Remove the deleted property from the list
-        this.properties = this.properties.filter(p => p.id !== property.id);
+      this.service.deleteProperty(property).subscribe({
+        next: () => {
+          window.alert("Property deleted successfully");
+          this.ngOnInit();
+        },
+        error: (error) => {
+          window.alert("Error deleting property")
+        }
       });
     }
   }
