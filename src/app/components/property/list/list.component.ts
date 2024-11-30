@@ -31,4 +31,17 @@ export class ListPropertiesComponent implements OnInit{
   addProperty() {
     this.router.navigate(['/property/create']);
   }
+
+  deleteProperty(property: IProperty, event: Event) {
+    // Prevent row click from triggering navigation
+    event.stopPropagation();
+
+    if (confirm(`Are you sure you want to delete the property "${property.name}"?`)) {
+      this.service.deleteProperty(property.id).subscribe(() => {
+        // Remove the deleted property from the list
+        this.properties = this.properties.filter(p => p.id !== property.id);
+      });
+    }
+  }
+
 }

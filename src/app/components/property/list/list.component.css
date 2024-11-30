@@ -3,7 +3,7 @@
   max-width: 1200px;
   margin: 40px auto;
   padding: 0 20px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .header {
@@ -65,6 +65,20 @@
   text-decoration: underline;
 }
 
+.delete-button {
+  background-color: #e74c3c; /* Red */
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .property-table th,
@@ -76,6 +90,11 @@
     padding: 10px 15px;
     font-size: 0.9em;
   }
+
+  .delete-button {
+    padding: 6px 10px;
+    font-size: 0.8em;
+  }
 }
 
 @media (max-width: 480px) {
@@ -86,5 +105,10 @@
   .add-button {
     padding: 8px 12px;
     font-size: 0.8em;
+  }
+
+  .delete-button {
+    padding: 5px 8px;
+    font-size: 0.7em;
   }
 }

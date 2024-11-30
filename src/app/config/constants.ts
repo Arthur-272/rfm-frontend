@@ -6,6 +6,7 @@ export class ApplicationConstants {
     private readonly BACKEND_PORT = 8080;
     private readonly VERSION = `v1`;
     private readonly HOST= 'https://rfm-backend-1.onrender.com'
+    // private readonly HOST= 'http://localhost:8080'
 
     getBackendPort(): number {
         return this.BACKEND_PORT;

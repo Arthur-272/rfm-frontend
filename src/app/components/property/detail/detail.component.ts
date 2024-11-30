@@ -15,13 +15,14 @@ import {PropertyService} from '../property.service';
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.css']
 })
-export class DetailPropertyComponent implements OnInit{
+export class DetailPropertyComponent implements OnInit {
   property: IProperty | null = null;
   filteredVehicles: IVehicle[] = [];
   searchQuery: string = '';
   vehicle: IVehicle | null = null;
 
-  constructor(private route: ActivatedRoute, private router: Router, private propertyService: PropertyService) {}
+  constructor(private route: ActivatedRoute, private router: Router, private propertyService: PropertyService) {
+  }
 
   ngOnInit() {
     this.refreshProperty();
@@ -56,6 +57,38 @@ export class DetailPropertyComponent implements OnInit{
     this.router.navigate(['/property/update'], {state: {property: this.property}});
   }
 
+  deleteVehicle(vehicle: IVehicle, event: Event) {
+    // Prevent the row's click event from triggering
+    event.stopPropagation();
+    const payload = {
+      vehicle :{
+        id: vehicle.id,
+        numberPlate: vehicle.numberPlate
+      },
+      property: {
+        id: this.property?.id || ''
+      }
+    }
+    if (confirm(`Are you sure you want to delete the vehicle with number plate "${vehicle.numberPlate}"?`)) {
+      this.propertyService.removeVehiclesFromProperty(payload).subscribe({
+        next: () => {
+          // Remove the vehicle from the list
+          this.filteredVehicles = this.filteredVehicles.filter(
+            (v) => v.id !== vehicle.id
+          );
+          if (this.property) {
+            this.property.authorizedVehicles = this.property.authorizedVehicles.filter(
+              (v) => v.id !== vehicle.id
+            );
+          }
+          window.alert('Vehicle deleted successfully!');
+        },
+        error: () => {
+          window.alert('Error deleting vehicle.');
+        },
+      });
+    }
+  }
 
 
 }

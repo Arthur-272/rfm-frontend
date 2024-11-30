@@ -36,5 +36,11 @@ export class PropertyService {
     return this.http.get(`${this.apiURL}/property/get`, {params: {id: id}});
   }
 
+  deleteProperty(id: string) {
+    return this.http.get(`${this.apiURL}/property/delete`, {params: {id: id}});
+  }
 
+  removeVehiclesFromProperty(payload: any): Observable<any> {
+    return this.http.post(`${this.apiURL}/property/remove-vehicle`, payload);
+  }
 }

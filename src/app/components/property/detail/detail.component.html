@@ -28,6 +28,12 @@
         <p><strong>Number Plate:</strong> {{ vehicle.numberPlate }}</p>
         <p><strong>Model:</strong> {{ vehicle.model }}</p>
         <p><strong>Color:</strong> {{ vehicle.color }}</p>
+        <button
+          class="delete-button"
+          (click)="deleteVehicle(vehicle, $event)"
+        >
+          Delete
+        </button>
       </div>
     </div>
   </div>

@@ -9,6 +9,7 @@
       <th>No.</th>
       <th>Name</th>
       <th>Address</th>
+      <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -22,6 +23,14 @@
           <span class="address" title="{{ property.address.fullAddress }}">
             {{ property.address.streetAddress }}
           </span>
+      </td>
+      <td>
+        <button
+          class="delete-button"
+          (click)="deleteProperty(property, $event)"
+        >
+          Delete
+        </button>
       </td>
     </tr>
     </tbody>
