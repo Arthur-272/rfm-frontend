@@ -19,7 +19,8 @@ export interface IProperty {
   id: string,
   name: string,
   address: IAddress,
-  authorizedVehicles: IVehicle[]
+  authorizedVehicles: IVehicle[],
+  isActive: boolean
 }
 
 export interface ILogin {
@@ -28,7 +29,10 @@ export interface ILogin {
 }
 
 export interface IUser {
-  username: string
+  username: string,
+  firstName: string,
+  lastName: string,
+  email: string
 }
 
 export interface ICatch {

@@ -54,7 +54,7 @@ export class AuthService {
     return this.http.get<IUser>(`${this.apiURL}/user`);
   }
 
-  register (payload: IRegister): Observable<any> {
+  register (payload: IUser): Observable<any> {
     return this.http.post(`${this.apiURL}/register`, payload);
 
   }

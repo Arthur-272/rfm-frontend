@@ -27,6 +27,7 @@ export class CreatePropertyComponent {
       postalCode: '',
       country: ''
     },
+    isActive: true,
     authorizedVehicles: []
   }
 

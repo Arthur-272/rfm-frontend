@@ -55,9 +55,7 @@ export class RegisterUserComponent {
 
   onSubmit() {
     if (this.registerForm.valid) {
-      const { username, password } = this.registerForm.value;
-      // Send username and password to the backend
-      this.authService.register({ username, password }).subscribe(
+      this.authService.register(this.registerForm.value).subscribe(
         (response) => {
           window.alert("Registration Successful!");
           // Handle success (e.g., navigate to login)
