@@ -1,0 +1,87 @@
+<!-- catch.component.html -->
+<div class="catch-container">
+  <h2>Report Unauthorized Vehicle</h2>
+  <form [formGroup]="catchForm" (ngSubmit)="onSubmit()">
+    <!-- Property Selection -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Select Property</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Type to search..."
+        formControlName="property"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        [displayWith]="displayProperty.bind(this)"
+      >
+        <mat-option
+          *ngFor="let property of filteredProperties | async"
+          [value]="property"
+        >
+          {{ property.address.fullAddress }}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="catchForm.get('property')?.hasError('required')"
+      >Property is required</mat-error
+      >
+    </mat-form-field>
+
+    <!-- Number Plate -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Number Plate</mat-label>
+      <input matInput formControlName="numberPlate" required />
+      <mat-error *ngIf="catchForm.get('numberPlate')?.hasError('required')"
+      >Number Plate is required</mat-error
+      >
+    </mat-form-field>
+
+    <!-- Model -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Model</mat-label>
+      <input matInput formControlName="model" required />
+      <mat-error *ngIf="catchForm.get('model')?.hasError('required')"
+      >Model is required</mat-error
+      >
+    </mat-form-field>
+
+    <!-- Color -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Color</mat-label>
+      <input matInput formControlName="color" required />
+      <mat-error *ngIf="catchForm.get('color')?.hasError('required')">
+        Color is required
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Date Picker (Optional) -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Select Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        placeholder="Choose a date"
+        formControlName="date"
+        [max]="today"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Submit Button -->
+    <button mat-raised-button color="primary" type="submit" [disabled]="!catchForm.valid">
+      Submit
+    </button>
+  </form>
+
+  <!-- Success Message -->
+  <div class="success-message" *ngIf="successMessage">
+    <p>{{ successMessage }}</p>
+  </div>
+
+  <!-- Error Message -->
+  <div class="error-message" *ngIf="errorMessage">
+    <p>{{ errorMessage }}</p>
+  </div>
+</div>
