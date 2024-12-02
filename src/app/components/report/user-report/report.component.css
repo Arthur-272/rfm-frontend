@@ -1,3 +1,5 @@
+/* report.component.css */
+
 /* Report container styles */
 .report-container {
   max-width: 1200px;
@@ -20,6 +22,19 @@
 .error-message {
   color: #b00020;
   text-align: center;
+}
+
+/* Date picker container */
+.date-picker-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px; /* Space between date picker and button */
+}
+
+.date-picker-container mat-form-field {
+  width: 250px;
 }
 
 /* Report table styles */
@@ -49,7 +64,13 @@
 .entry-card {
   background-color: #fff;
   border-radius: 8px;
-  padding: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.entry-card.empty {
+  background-color: #f5f5f5;
+  color: #777;
 }
 
 .entry-header h4 {
@@ -65,6 +86,10 @@
 
 .entry-content p {
   margin: 10px 0;
+}
+
+.entry-content strong {
+  color: #333;
 }
 
 /* Adjust empty cells */
@@ -91,5 +116,24 @@
 
   .report-table th {
     display: none;
+  }
+
+  .entry-card {
+    padding: 10px;
+  }
+
+  .date-picker-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .date-picker-container mat-form-field {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .date-picker-container button {
+    width: 100%;
+    max-width: 150px;
   }
 }

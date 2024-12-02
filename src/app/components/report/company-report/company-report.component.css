@@ -1,3 +1,5 @@
+/* company-report.component.css */
+
 .company-report-container {
   max-width: 1200px;
   margin: 40px auto;
@@ -15,6 +17,18 @@
   color: #b00020;
   text-align: center;
   margin-bottom: 20px;
+}
+
+.date-picker-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px; /* Space between date picker and button */
+}
+
+.date-picker-container mat-form-field {
+  width: 250px;
 }
 
 .report-table {

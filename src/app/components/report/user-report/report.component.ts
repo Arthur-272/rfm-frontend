@@ -1,13 +1,31 @@
+// report.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReportService } from '../report.service';
-import { ICatch, IRelease, IReportEntry, IUser } from '../../../interface';
+import { ICatch, IReportEntry, IUser } from '../../../interface';
 import { AuthService } from '../../auth/auth.service';
+import { FormsModule } from '@angular/forms';
+
+// Angular Material Modules
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core'; // For date adapter
 
 @Component({
   selector: 'app-report',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    // Angular Material Modules
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+  ],
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.css'],
 })
@@ -16,6 +34,10 @@ export class ReportComponent implements OnInit {
   halfEntries: IReportEntry[] = [];
   errorMessage: string = '';
   currentUser: IUser | undefined;
+  selectedDate: Date | null = null;
+
+  // For restricting future dates
+  today: Date = new Date();
 
   constructor(private reportService: ReportService, private authService: AuthService) {
     this.authService.getCurrentUser().subscribe((currentUser) => {
@@ -24,9 +46,17 @@ export class ReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.reportService.getReportDataForUser().subscribe({
-      next: (data) => {
-        this.processData(data.catches, data.releases);
+    this.fetchReportData();
+  }
+
+  /**
+   * Fetches report data based on the selected date.
+   */
+  fetchReportData(): void {
+    const dateISO = this.selectedDate ? this.selectedDate.toISOString() : new Date().toISOString();
+    this.reportService.getReportDataForUser(dateISO).subscribe({
+      next: (data: ICatch[]) => {
+        this.processData(data);
       },
       error: (error) => {
         this.errorMessage = 'Error fetching report data';
@@ -35,7 +65,20 @@ export class ReportComponent implements OnInit {
     });
   }
 
-  processData(catches: ICatch[], releases: IRelease[]): void {
+  /**
+   * Handler for date change event.
+   * @param event MatDatepickerInputEvent<Date>
+   */
+  onDateChange(event: any): void {
+    this.selectedDate = event.value;
+    this.fetchReportData();
+  }
+
+  /**
+   * Processes the fetched catches to categorize them into full and half entries.
+   * @param catches Array of ICatch
+   */
+  processData(catches: ICatch[]): void {
     if (!this.currentUser) {
       this.errorMessage = 'User not logged in.';
       return;
@@ -43,70 +86,37 @@ export class ReportComponent implements OnInit {
 
     const fullEntriesMap = new Map<string, IReportEntry>();
     const halfEntriesMap = new Map<string, IReportEntry>();
-    const processedReleaseIds = new Set<string>();
 
-    // Process catches
     catches.forEach((catchInfo) => {
       const isCatchByUser = catchInfo.user.username === this.currentUser?.username;
-      const isReleaseByUser = catchInfo.releaseInfo?.user.username === this.currentUser?.username;
+      const isReleaseByUser = catchInfo.releaseInfo.user.username === this.currentUser?.username;
 
-      const key = catchInfo.id; // Use catch ID as the key
+      const key = catchInfo.id; // Unique identifier for the catch
 
       if (isCatchByUser && isReleaseByUser) {
-        // Full entry
+        // Full Entry: Both catch and release by the current user
         fullEntriesMap.set(key, {
           catchInfo,
-          releaseInfo: catchInfo.releaseInfo!,
+          releaseInfo: catchInfo.releaseInfo,
           type: 'full',
           vehicle: catchInfo.vehicle,
           property: catchInfo.property,
         });
-        if (catchInfo.releaseInfo) {
-          processedReleaseIds.add(catchInfo.releaseInfo.id);
-        }
       } else if (isCatchByUser || isReleaseByUser) {
-        // Half entry
-        const vehicle = isCatchByUser ? catchInfo.vehicle : catchInfo.releaseInfo!.vehicle;
-        const property = isCatchByUser ? catchInfo.property : catchInfo.releaseInfo!.property;
-
+        // Half Entry: Either catch or release by the current user
         halfEntriesMap.set(key, {
           catchInfo: isCatchByUser ? catchInfo : null,
           releaseInfo: isReleaseByUser ? catchInfo.releaseInfo : null,
           type: 'half',
-          vehicle,
-          property,
+          vehicle: isCatchByUser ? catchInfo.vehicle : catchInfo.releaseInfo.vehicle,
+          property: isCatchByUser ? catchInfo.property : catchInfo.releaseInfo.property,
         });
-        if (catchInfo.releaseInfo && isReleaseByUser) {
-          processedReleaseIds.add(catchInfo.releaseInfo.id);
-        }
       }
+      // Entries where neither catch nor release is by the current user are ignored
     });
 
-    // Process releases not associated with a catch
-    releases.forEach((releaseInfo) => {
-      const isReleaseByUser = releaseInfo.user.username === this.currentUser?.username;
-
-      // Skip releases that have already been processed
-      if (isReleaseByUser && !processedReleaseIds.has(releaseInfo.id)) {
-        const key = releaseInfo.id; // Use release ID as the key
-
-        // Check if this release is already in halfEntriesMap (unlikely but for safety)
-        if (!halfEntriesMap.has(key)) {
-          // Create a half entry with only release info
-          halfEntriesMap.set(key, {
-            catchInfo: null,
-            releaseInfo,
-            type: 'half',
-            vehicle: releaseInfo.vehicle,
-            property: releaseInfo.property,
-          });
-        }
-      }
-    });
-
-    // Convert maps to arrays
+    // Assign the categorized entries to the component's properties
     this.fullEntries = Array.from(fullEntriesMap.values());
     this.halfEntries = Array.from(halfEntriesMap.values());
   }
-
 }

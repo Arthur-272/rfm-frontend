@@ -1,9 +1,30 @@
+<!-- company-report.component.html -->
 <div class="company-report-container">
   <h2>Company Report</h2>
+
+  <!-- Date Picker -->
+  <div class="date-picker-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Select Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        [max]="today"
+      (dateChange)="onDateChange($event)"
+      placeholder="Choose a date"
+      [(ngModel)]="selectedDate"
+      >
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <!-- Error Message -->
   <div *ngIf="errorMessage" class="error-message">
     {{ errorMessage }}
   </div>
 
+  <!-- Report Table -->
   <table class="report-table" *ngIf="reportEntries.length > 0">
     <thead>
     <tr>
@@ -14,7 +35,7 @@
     </thead>
     <tbody>
     <tr *ngFor="let entry of reportEntries">
-      <td>
+      <td data-label="Caught By">
         <div class="user-info">
           <p><strong>User:</strong> {{ entry.catchInfo.user.username }}</p>
           <p>
@@ -22,7 +43,7 @@
           </p>
         </div>
       </td>
-      <td>
+      <td data-label="Released By">
         <div class="user-info">
           <p><strong>User:</strong> {{ entry.releaseInfo.user.username }}</p>
           <p>
@@ -30,7 +51,7 @@
           </p>
         </div>
       </td>
-      <td>
+      <td data-label="Details">
         <div class="details">
           <p>
             <strong>Vehicle:</strong> {{ entry.catchInfo.vehicle.numberPlate }} -
@@ -50,6 +71,6 @@
 
   <!-- No Entries Message -->
   <div *ngIf="reportEntries.length === 0 && !errorMessage">
-    <p>No entries available.</p>
+    <p>No entries available for the selected date.</p>
   </div>
 </div>

@@ -1,5 +1,17 @@
 <div class="report-container">
   <h2>My Daily Report</h2>
+
+  <!-- Date Picker -->
+  <div class="date-picker-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Select Date</mat-label>
+      <input matInput [matDatepicker]="picker" [max]="today" (dateChange)="onDateChange($event)" placeholder="Choose a date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <!-- Error Message -->
   <div *ngIf="errorMessage">
     <p class="error-message">{{ errorMessage }}</p>
   </div>
@@ -75,12 +87,15 @@
             </div>
           </ng-container>
           <ng-template #emptyCell>
-            <!-- Empty Cell -->
+            <!-- Empty Catch Cell -->
+            <div class="entry-card empty">
+              <p>No Catch Info</p>
+            </div>
           </ng-template>
         </td>
         <td>
           <!-- Release Info or Empty -->
-          <ng-container *ngIf="entry.releaseInfo; else emptyCell">
+          <ng-container *ngIf="entry.releaseInfo; else emptyReleaseCell">
             <div class="entry-card">
               <div class="entry-header">
                 <h4>{{ entry.vehicle.numberPlate }}</h4>
@@ -98,6 +113,12 @@
               </div>
             </div>
           </ng-container>
+          <ng-template #emptyReleaseCell>
+            <!-- Empty Release Cell -->
+            <div class="entry-card empty">
+              <p>No Release Info</p>
+            </div>
+          </ng-template>
         </td>
       </tr>
       </tbody>
@@ -106,6 +127,6 @@
 
   <!-- No Entries Message -->
   <div *ngIf="fullEntries.length === 0 && halfEntries.length === 0">
-    <p>You have no entries for today.</p>
+    <p>You have no entries for the selected date.</p>
   </div>
 </div>

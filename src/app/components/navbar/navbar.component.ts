@@ -17,6 +17,7 @@ import {NgClass, NgForOf, NgIf} from '@angular/common';
 })
 export class NavbarComponent implements OnInit {
   options = [
+    {name: 'Catch'},
     { name: 'Live' },
     { name: 'Properties' },
     { name: 'My Report' },
@@ -72,6 +73,9 @@ export class NavbarComponent implements OnInit {
 
   onClick(name: string) {
     switch (name) {
+      case 'Catch':
+        this.router.navigate(['/catch']);
+        break;
       case 'Login':
         this.router.navigate(['/login']);
         break;

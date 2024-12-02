@@ -28,8 +28,7 @@ export const routes: Routes = [
   { path: 'property/detail', component: DetailPropertyComponent, canActivate: [AuthGuard] },
   { path: 'property/create', component: CreatePropertyComponent, canActivate: [AuthGuard] },
   { path: 'property/update', component: CreateVehicleComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent },
-  { path: '**', redirectTo: '/home' }, // Catch-all should remain at the end
+  { path: 'login', component: LoginComponent }
 ];
 
 

@@ -13,22 +13,22 @@ interface IReportData {
   providedIn: 'root',
 })
 export class ReportService {
-  private apiURL = ''; // Replace with your API URL
+  private apiURL;
 
   constructor(private http: HttpClient, private appConfigService: ApplicationConfigService) {
     this.apiURL = this.appConfigService.getResourceURL();
   }
 
-  getReportDataForUser(): Observable<IReportData> {
+  getReportDataForUser(date: string): Observable<ICatch[]> {
     const payload = {
-      'date': new Date().toISOString()
+      'date': date
     }
-    return this.http.post<IReportData>(`${this.apiURL}/report/user`, payload);
+    return this.http.post<ICatch[]>(`${this.apiURL}/report/user`, payload);
   }
 
-  getReportData(): Observable<ICatch[]> {
+  getReportData(date: string): Observable<ICatch[]> {
     const payload = {
-      'date': new Date().toISOString()
+      'date': date
     }
     return this.http.post<ICatch[]>(`${this.apiURL}/report/rfm`, payload);
   }

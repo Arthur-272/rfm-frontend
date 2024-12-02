@@ -1,8 +1,18 @@
+<!-- live.component.html -->
 <div class="live-container">
   <h2>Caught Vehicles</h2>
-  <div *ngIf="errorMessage">
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="error-message">
     <p>{{ errorMessage }}</p>
   </div>
+
+  <!-- Success Message -->
+  <div *ngIf="successMessage" class="success-message">
+    <p>{{ successMessage }}</p>
+  </div>
+
+  <!-- Grid Container for Flip Cards -->
   <div class="grid-container">
     <div
       *ngFor="let catchInfo of caughtVehicles; let i = index"
@@ -38,14 +48,16 @@
           </div>
           <div class="card-actions">
             <button
-              type="button"
-              (click)="releaseCatch(catchInfo); $event.stopPropagation()"
+              mat-button
+              color="accent"
+              (click)="openReleaseDialog(catchInfo); $event.stopPropagation()"
             >
               Release
             </button>
             <button
-              type="button"
-              (click)="removeCatch(catchInfo); $event.stopPropagation()"
+              mat-button
+              color="warn"
+              (click)="openRemoveDialog(catchInfo); $event.stopPropagation()"
             >
               Remove
             </button>
