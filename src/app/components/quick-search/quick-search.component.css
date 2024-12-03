@@ -5,10 +5,18 @@
   --font-family: 'Poppins', sans-serif;
 }
 
+/* Apply box-sizing globally to include padding and borders in element's total width and height */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 /* Global styles */
 .search-container {
-  max-width: 500px;
-  margin: 50px auto;
+  /* Remove width: 100%; to allow the container to respect max-width and enable horizontal centering */
+  /* width: 100%; */ /* This line is removed */
+
+  max-width: 500px; /* Maintains maximum width */
+  margin: 50px auto; /* Centers horizontally with top and bottom margins */
   padding: 30px;
   background-color: #ffffff;
   border-radius: 8px;
@@ -69,7 +77,6 @@
   transition: background-color 0.3s ease;
 }
 
-
 /* Vehicle Details */
 .vehicle-details {
   margin-top: 30px;
@@ -111,7 +118,7 @@
 /* Responsive Styles */
 @media screen and (max-width: 480px) {
   .search-container {
-    margin: 20px;
+    margin: 20px auto; /* Adjusted to maintain horizontal centering */
     padding: 20px;
   }
 
@@ -124,3 +131,9 @@
     padding: 10px 15px;
   }
 }
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+  /* Optional: Add medium screen adjustments if needed */
+}
+
+/* Desktop Centering (Ensured by margin: auto and width: 100%) */
