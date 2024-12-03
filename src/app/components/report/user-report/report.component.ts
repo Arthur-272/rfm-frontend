@@ -1,5 +1,5 @@
 // report.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReportService } from '../report.service';
 import { ICatch, IReportEntry, IUser } from '../../../interface';
@@ -8,10 +8,12 @@ import { FormsModule } from '@angular/forms';
 
 // Angular Material Modules
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatFormFieldModule, MatLabel} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core'; // For date adapter
+
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-report',
@@ -22,6 +24,7 @@ import { MatNativeDateModule } from '@angular/material/core'; // For date adapte
     // Angular Material Modules
     MatFormFieldModule,
     MatInputModule,
+    MatLabel,
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
@@ -29,7 +32,7 @@ import { MatNativeDateModule } from '@angular/material/core'; // For date adapte
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.css'],
 })
-export class ReportComponent implements OnInit {
+export class ReportComponent implements OnInit, OnDestroy {
   fullEntries: IReportEntry[] = [];
   halfEntries: IReportEntry[] = [];
   errorMessage: string = '';
@@ -39,14 +42,34 @@ export class ReportComponent implements OnInit {
   // For restricting future dates
   today: Date = new Date();
 
-  constructor(private reportService: ReportService, private authService: AuthService) {
-    this.authService.getCurrentUser().subscribe((currentUser) => {
-      this.currentUser = currentUser;
-    });
-  }
+  // Subscription management
+  private subscriptions: Subscription = new Subscription();
+
+  constructor(private reportService: ReportService, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.fetchReportData();
+    // Subscribe to getCurrentUser and fetch data once user is retrieved
+    const userSub = this.authService.getCurrentUser().subscribe({
+      next: (currentUser) => {
+        this.currentUser = currentUser;
+        if (this.currentUser) {
+          this.fetchReportData();
+        } else {
+          this.errorMessage = 'User not logged in.';
+        }
+      },
+      error: (error) => {
+        this.errorMessage = 'Error retrieving user information.';
+        console.error('Error fetching current user:', error);
+      },
+    });
+
+    this.subscriptions.add(userSub);
+  }
+
+  ngOnDestroy(): void {
+    // Unsubscribe to prevent memory leaks
+    this.subscriptions.unsubscribe();
   }
 
   /**
@@ -54,15 +77,18 @@ export class ReportComponent implements OnInit {
    */
   fetchReportData(): void {
     const dateISO = this.selectedDate ? this.selectedDate.toISOString() : new Date().toISOString();
-    this.reportService.getReportDataForUser(dateISO).subscribe({
+    const reportSub = this.reportService.getReportDataForUser(dateISO).subscribe({
       next: (data: ICatch[]) => {
         this.processData(data);
+        this.errorMessage = ''; // Clear any previous error messages
       },
       error: (error) => {
-        this.errorMessage = 'Error fetching report data';
-        console.error('Error:', error);
+        this.errorMessage = 'Error fetching report data.';
+        console.error('Error fetching report data:', error);
       },
     });
+
+    this.subscriptions.add(reportSub);
   }
 
   /**
@@ -71,7 +97,11 @@ export class ReportComponent implements OnInit {
    */
   onDateChange(event: any): void {
     this.selectedDate = event.value;
-    this.fetchReportData();
+    if (this.currentUser) {
+      this.fetchReportData();
+    } else {
+      this.errorMessage = 'User not logged in.';
+    }
   }
 
   /**
@@ -89,7 +119,7 @@ export class ReportComponent implements OnInit {
 
     catches.forEach((catchInfo) => {
       const isCatchByUser = catchInfo.user.username === this.currentUser?.username;
-      const isReleaseByUser = catchInfo.releaseInfo.user.username === this.currentUser?.username;
+      const isReleaseByUser = catchInfo.releaseInfo?.user.username === this.currentUser?.username;
 
       const key = catchInfo.id; // Unique identifier for the catch
 
@@ -108,8 +138,8 @@ export class ReportComponent implements OnInit {
           catchInfo: isCatchByUser ? catchInfo : null,
           releaseInfo: isReleaseByUser ? catchInfo.releaseInfo : null,
           type: 'half',
-          vehicle: isCatchByUser ? catchInfo.vehicle : catchInfo.releaseInfo.vehicle,
-          property: isCatchByUser ? catchInfo.property : catchInfo.releaseInfo.property,
+          vehicle: isCatchByUser ? catchInfo.vehicle : catchInfo.releaseInfo?.vehicle,
+          property: isCatchByUser ? catchInfo.property : catchInfo.releaseInfo?.property,
         });
       }
       // Entries where neither catch nor release is by the current user are ignored
