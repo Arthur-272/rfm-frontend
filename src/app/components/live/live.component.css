@@ -1,129 +1,303 @@
-/* Container for the flip card */
+/* live.component.css */
+
+/* 1. Global Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* 2. Container for the entire component */
+.live-container {
+  width: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+  max-width: 1200px; /* Limits the maximum width */
+  margin: 0 auto; /* Centers the container */
+}
+
+/* 3. Grid Container Styling */
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  padding: 0;
+  justify-content: left; /* Center the grid within the container */
+}
+
+/* 4. Flip Card Styling */
 .flip-card {
   background-color: transparent;
-  width: 100%;
-  perspective: 1000px; /* Remove this if you don't want the 3D effect */
+  perspective: 1000px;
   cursor: pointer;
+  width: 100%;
+  height: 220px;
+  max-width: 220px; /* Ensure cards don't exceed this width */
+  margin: 0 auto; /* Center the card within the grid cell */
 }
 
 .flip-card-inner {
   position: relative;
   width: 100%;
+  height: 100%;
   transform-style: preserve-3d;
   transition: transform 0.6s;
 }
 
+/* Flip the card when active */
 .flip-card-inner.flipped {
   transform: rotateY(180deg);
 }
 
+/* Front and Back Faces */
 .flip-card-front,
 .flip-card-back {
   position: absolute;
   width: 100%;
+  height: 100%;
   backface-visibility: hidden;
-}
-
-.flip-card-front {
-  /* Front side styles */
-  background-color: #ffffff;
-  border-radius: 8px;
+  border-radius: 6px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
+  0 3px 10px rgba(0, 0, 0, 0.15);
 }
 
 .flip-card-back {
-  /* Back side styles */
-  background-color: #ffffff;
-  border-radius: 8px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
   transform: rotateY(180deg);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-.flip-card .card-header {
-  padding: 20px;
+/* Card Header */
+.card-header {
+  padding: 8px;
   background-color: #f5f5f5;
-  align-self: center;
+  text-align: center;
 }
 
-.flip-card .card-title {
+.card-title {
   margin: 0;
-  font-size: 1.5em;
+  font-size: 1em; /* Smaller font size */
+  word-wrap: break-word;
 }
 
-.flip-card .card-subtitle {
-  margin: 5px 0 0;
+.card-subtitle {
+  margin: 4px 0 0;
   color: #777;
+  font-size: 0.8em;
 }
 
-.flip-card .card-content {
-  padding: 20px;
+/* Card Content */
+.card-content {
+  padding: 8px 10px;
   flex-grow: 1;
+  font-size: 0.8em;
+  overflow-y: auto;
 }
 
-.flip-card .card-content p {
-  margin: 10px 0;
-}
-
-.flip-card .card-actions {
-  padding: 15px 20px;
+/* Card Actions (Buttons) */
+.card-actions {
+  padding: 6px 10px;
   background-color: #f5f5f5;
   display: flex;
   justify-content: flex-end;
+  gap: 8px;
 }
 
-.flip-card .card-actions button {
-  background-color: #4db6ac;
-  color: #ffffff;
+.card-actions button {
+  padding: 6px 8px;
   border: none;
-  padding: 10px 15px;
-  margin-left: 10px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9em;
+  font-size: 0.75em;
+  flex: 1;
 }
 
-.flip-card .card-actions button:hover {
+/* Release Button */
+.card-actions button:first-child {
+  background-color: #4db6ac;
+  color: #ffffff;
+}
+
+.card-actions button:first-child:hover {
   background-color: #43a597;
 }
 
-.flip-card .card-actions button:nth-child(2) {
+/* Remove Button */
+.card-actions button:last-child {
   background-color: #e57373;
+  color: #ffffff;
 }
 
-.flip-card .card-actions button:nth-child(2):hover {
+.card-actions button:last-child:hover {
   background-color: #d32f2f;
 }
 
-/* Grid container styling */
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  grid-gap: 20px;
-}
+/* 5. Message Styling */
 
 /* Error Message */
 .error-message {
-  margin-top: 20px;
-  padding: 15px;
-  background-color: #fceae9; /* Light red background */
-  color: black;
-  border-left: 4px solid var(--error-color);
+  margin: 15px 0;
+  padding: 10px;
+  background-color: #fceae9;
+  color: #000000;
+  border-left: 4px solid #e57373;
   border-radius: 4px;
+  font-size: 0.85em;
 }
 
-
 /* Success Message */
-.success-message{
-  margin-top: 20px;
-  padding: 15px;
-  background-color: lightgreen; /* Light green background */
-  color: black;
-  border-left: 4px solid forestgreen; /* Adjusted for success */
+.success-message {
+  margin: 15px 0;
+  padding: 10px;
+  background-color: #d4edda;
+  color: #155724;
+  border-left: 4px solid #28a745;
   border-radius: 4px;
+  font-size: 0.85em;
+}
+
+/* 6. Responsive Adjustments */
+
+/* Small Devices (Portrait Tablets and Large Phones, 600px and down) */
+@media (max-width: 600px) {
+  .grid-container {
+    grid-template-columns: 1fr; /* Single column */
+    gap: 10px;
+  }
+
+  .flip-card {
+    max-width: 100%; /* Full width on small screens */
+    height: 180px; /* Reduced height for smaller screens */
+  }
+
+  .card-header {
+    padding: 6px;
+  }
+
+  .card-title {
+    font-size: 0.9em;
+  }
+
+  .card-subtitle {
+    font-size: 0.75em;
+  }
+
+  .card-content {
+    padding: 6px 8px;
+    font-size: 0.7em;
+  }
+
+  .card-actions {
+    padding: 5px 8px;
+    gap: 6px;
+  }
+
+  .card-actions button {
+    padding: 5px 6px;
+    font-size: 0.7em;
+  }
+
+  .error-message,
+  .success-message {
+    font-size: 0.75em;
+    padding: 8px;
+  }
+}
+
+/* Medium Devices (Landscape Tablets, 601px to 900px) */
+@media (min-width: 601px) and (max-width: 900px) {
+  .grid-container {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+  }
+
+  .flip-card {
+    max-width: 180px;
+    height: 200px;
+  }
+
+  .card-header {
+    padding: 7px;
+  }
+
+  .card-title {
+    font-size: 0.95em;
+  }
+
+  .card-subtitle {
+    font-size: 0.78em;
+  }
+
+  .card-content {
+    padding: 7px 9px;
+    font-size: 0.73em;
+  }
+
+  .card-actions {
+    padding: 6px 9px;
+    gap: 7px;
+  }
+
+  .card-actions button {
+    padding: 5px 7px;
+    font-size: 0.73em;
+  }
+
+  .error-message,
+  .success-message {
+    font-size: 0.78em;
+    padding: 9px;
+  }
+}
+
+/* Large Devices (Desktops, 901px and up) */
+@media (min-width: 901px) {
+  .grid-container {
+    /* Limit the number of columns by setting a max number */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+  }
+
+  .flip-card {
+    max-width: 220px;
+    height: 220px;
+  }
+
+  .card-header {
+    padding: 8px;
+  }
+
+  .card-title {
+    font-size: 1em;
+  }
+
+  .card-subtitle {
+    font-size: 0.8em;
+  }
+
+  .card-content {
+    padding: 8px 10px;
+    font-size: 0.8em;
+  }
+
+  .card-actions {
+    padding: 6px 10px;
+    gap: 8px;
+  }
+
+  .card-actions button {
+    padding: 6px 8px;
+    font-size: 0.75em;
+  }
+
+  .error-message,
+  .success-message {
+    font-size: 0.85em;
+    padding: 10px;
+  }
 }
