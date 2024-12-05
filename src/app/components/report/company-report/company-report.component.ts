@@ -46,8 +46,11 @@ export class CompanyReportComponent implements OnInit {
    * Fetches report data based on the selected date.
    */
   fetchReportData(): void {
-    const dateISO = this.selectedDate ? this.selectedDate.toISOString() : new Date().toISOString();
-    this.reportService.getReportData(dateISO).subscribe({
+    const dateToSend = this.selectedDate
+      ? this.adjustToBrowserTimezone(this.selectedDate)
+      : this.adjustToBrowserTimezone(new Date());
+
+    this.reportService.getReportData(dateToSend).subscribe({
       next: (data: ICatch[]) => {
         this.processData(data);
         this.errorMessage = ''; // Clear any previous errors
@@ -58,6 +61,17 @@ export class CompanyReportComponent implements OnInit {
       },
     });
   }
+
+  /**
+   * Adjusts a given date to match the browser's timezone.
+   * @param date Date object to adjust
+   * @returns ISO string of the adjusted date
+   */
+  adjustToBrowserTimezone(date: Date): string {
+    const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    return offsetDate.toISOString();
+  }
+
 
   /**
    * Handler for date change event.

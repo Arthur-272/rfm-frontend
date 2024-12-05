@@ -76,8 +76,12 @@ export class ReportComponent implements OnInit, OnDestroy {
    * Fetches report data based on the selected date.
    */
   fetchReportData(): void {
-    const dateISO = this.selectedDate ? this.selectedDate.toISOString() : new Date().toISOString();
-    const reportSub = this.reportService.getReportDataForUser(dateISO).subscribe({
+
+    const dateToSend = this.selectedDate
+      ? this.adjustToBrowserTimezone(this.selectedDate)
+      : this.adjustToBrowserTimezone(new Date());
+
+    const reportSub = this.reportService.getReportDataForUser(dateToSend).subscribe({
       next: (data: ICatch[]) => {
         this.processData(data);
         this.errorMessage = ''; // Clear any previous error messages
@@ -89,6 +93,11 @@ export class ReportComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.add(reportSub);
+  }
+
+  adjustToBrowserTimezone(date: Date): string {
+    const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    return offsetDate.toISOString();
   }
 
   /**
