@@ -1,18 +1,29 @@
 <div class="search-container">
   <h2>Search Vehicle</h2>
-  <form (ngSubmit)="onSearch()">
+  <!-- Add #f="ngForm" to the form for template-driven validation -->
+  <form #f="ngForm" (ngSubmit)="onSearch()" novalidate>
     <div class="form-group">
       <label for="numberPlate">Enter Vehicle Number Plate:</label>
       <input
         type="text"
         id="numberPlate"
         [(ngModel)]="numberPlate"
+        (ngModelChange)="transformNumberPlate($event)"
         name="numberPlate"
         required
+        pattern="[A-Z0-9]+"
         placeholder="e.g., ABC123"
       />
+      <!-- Display error if pattern doesn't match and user interacted -->
+      <div class="error-message" *ngIf="f.submitted && f.controls['numberPlate']?.invalid">
+        <p *ngIf="f.controls['numberPlate']?.errors?.['required']">Number Plate is required.</p>
+        <p *ngIf="f.controls['numberPlate']?.errors?.['pattern']">
+          Number Plate must be uppercase alphanumeric and contain no spaces.
+        </p>
+      </div>
     </div>
-    <button type="submit" class="search-button">Search</button>
+
+    <button type="submit" class="search-button" [disabled]="f.invalid">Search</button>
   </form>
 
   <div class="vehicle-details" *ngIf="vehicle">

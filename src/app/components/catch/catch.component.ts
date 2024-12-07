@@ -73,14 +73,23 @@ export class CatchComponent implements OnInit {
   ngOnInit(): void {
     this.propertyService.getAllProperties().subscribe((properties) => {
       this.properties = properties;
-
       this.filteredProperties = this.catchForm.get('property')!.valueChanges.pipe(
-        startWith(''),
-        map((value) => (typeof value === 'string' ? value : value.address.fullAddress)),
-        map((fullAddress) => (fullAddress ? this._filterProperties(fullAddress) : this.properties.slice()))
+          startWith(''),
+          map(value => typeof value === 'string' ? value : value.address.fullAddress),
+          map(fullAddress => fullAddress ? this._filterProperties(fullAddress) : this.properties.slice())
       );
     });
+
+    // Listen for changes in numberPlate and transform the value
+    this.catchForm.get('numberPlate')!.valueChanges.subscribe(val => {
+      // Convert to uppercase and remove spaces
+      const transformed = (val || '').toUpperCase().replace(/\s/g, '');
+      if (val !== transformed) {
+        this.catchForm.get('numberPlate')!.setValue(transformed, {emitEvent: false});
+      }
+    });
   }
+
 
   displayProperty(property: IProperty): string {
     return property && property.address.fullAddress ? property.address.fullAddress : '';
