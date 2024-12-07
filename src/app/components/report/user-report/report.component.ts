@@ -77,9 +77,19 @@ export class ReportComponent implements OnInit, OnDestroy {
    */
   fetchReportData(): void {
 
-    const dateToSend = this.selectedDate
-      ? this.adjustToBrowserTimezone(this.selectedDate)
-      : this.adjustToBrowserTimezone(new Date());
+    let current = new Date();
+
+    // Check current hour
+    if (current.getHours() < 4) {
+      // If it's before 4 AM, subtract one day
+      current.setDate(current.getDate() - 1);
+    }
+
+    // Set time to 4:00 AM
+    current.setHours(4, 0, 0, 0);
+
+    const dateToSend = this.adjustToBrowserTimezone(current);
+
 
     const reportSub = this.reportService.getReportDataForUser(dateToSend).subscribe({
       next: (data: ICatch[]) => {
